@@ -1,2 +1,2 @@
 # cipher-py
-Basic CLI cipher application to review python
+Implement ROT13, Caesar, and Vigenere ciphers in simple CLI python app.
