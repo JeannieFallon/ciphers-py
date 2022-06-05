@@ -19,7 +19,7 @@ class TestCiphers:
         assert pytest_wrapped_e.value.code == errno.ENOENT
 
     def test_rot13(self):
-        plain = 'This is test plaintext'
+        plain = "This is test plaintext"
         args = Args(plaintext=plain)
         rc = src.ciphers.rot13(args)
         assert rc == 0

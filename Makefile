@@ -1,3 +1,5 @@
+PY_FILES = `find . -name '*.py'`
+
 .PHONY: image # Build Docker development image
 image:
 	scripts/image.sh
@@ -5,6 +7,10 @@ image:
 .PHONY: shell # Run shell into Docker development container
 shell:
 	scripts/shell.sh
+
+.PHONY: format # Run Black Python code formatter
+format:
+	black $(PY_FILES)
 
 .PHONY: build # Build ciphers-py executable
 build:
