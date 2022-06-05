@@ -10,6 +10,10 @@ shell:
 build:
 	scripts/build.sh
 
+.PHONY: test # Run unit tests
+test:
+	python -m pytest -v
+
 .PHONY: clean # Remove all build content
 clean:
 	rm -rf bin build
