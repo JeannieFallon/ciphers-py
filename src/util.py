@@ -1,0 +1,6 @@
+import sys
+
+
+UPPER_MAP = 65
+LOWER_MAP = 97
+ALPHA_LEN = 26

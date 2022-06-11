@@ -4,6 +4,7 @@ import errno
 import pytest
 
 import src.ciphers
+import src.util
 
 
 class Args:
@@ -24,3 +25,15 @@ class TestCiphers:
         rc = src.ciphers.rot13(args)
         assert rc == 0
         # TODO get console output
+
+    def test_caesar(self):
+        plain = "This is a test message"
+        args = Args(message=plain)
+        rc = src.ciphers.caesar(args)
+        assert rc == 0
+
+    def test_vigenere(self):
+        plain = "This is a test message"
+        args = Args(message=plain)
+        rc = src.ciphers.vigenere(args)
+        assert rc == 0
