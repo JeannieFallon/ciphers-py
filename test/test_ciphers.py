@@ -7,8 +7,8 @@ import src.ciphers
 
 
 class Args:
-    def __init__(self, *, plaintext=None):
-        self.plaintext = plaintext
+    def __init__(self, *, message=None):
+        self.message = message
 
 
 class TestCiphers:
@@ -19,8 +19,8 @@ class TestCiphers:
         assert pytest_wrapped_e.value.code == errno.ENOENT
 
     def test_rot13(self):
-        plain = "This is test plaintext"
-        args = Args(plaintext=plain)
+        plain = "This is a test message"
+        args = Args(message=plain)
         rc = src.ciphers.rot13(args)
         assert rc == 0
         # TODO get console output
