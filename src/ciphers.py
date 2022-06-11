@@ -8,16 +8,7 @@ def rot13(args) -> int:
     msg = args.message
     print(f"Running ROT13 cipher on message:\n{msg}")
 
-    cipher = ""
-    for c in msg:
-        if c.isalpha():
-            map_val = util.UPPER_MAP if c.isupper() else util.LOWER_MAP
-            alpha_idx = ord(c) - map_val
-            shift_idx = (alpha_idx + 13) % util.ALPHA_LEN
-            c = chr(shift_idx + map_val)
-
-        cipher += c
-
+    cipher = util.get_cipher(msg, key=13)
     print(f"Ciphertext is:\n{cipher}")
     return 0
 
