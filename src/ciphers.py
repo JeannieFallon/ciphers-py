@@ -15,7 +15,11 @@ def rot13(args) -> int:
 
 def caesar(args) -> int:
     msg = args.message
-    print(f"Running Caesar cipher on message: {msg}")
+    key = args.keyval
+    print(f"Running Caesar cipher with shift value {key} on message:\n{msg}")
+
+    cipher = util.get_cipher(msg, key=key)
+    print(f"Ciphertext is:\n{cipher}")
     return 0
 
 
@@ -41,6 +45,13 @@ def main() -> int:
 
     caesar_parser = cipher_parsers.add_parser(
         "caesar", parents=[msg_parser], help="caesar help"
+    )
+    caesar_parser.add_argument(
+        "--keyval",
+        "-k",
+        required=True,
+        type=int,
+        help="the shift value for each letter",
     )
     caesar_parser.set_defaults(func=caesar)
 
