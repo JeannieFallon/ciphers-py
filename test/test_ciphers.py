@@ -6,7 +6,12 @@ import pytest
 import src.ciphers
 import src.util
 
-TEST_MESSAGES = ["Curiouser and curiouser!", "xyzabc XYZABC", "a! B@ c#", "1 2 3 4 5"]
+TEST_MESSAGES = [
+    ("Curiouser and curiouser!", "Phevbhfre naq phevbhfre!"),
+    ("xyzabc XYZABC", "klmnop KLMNOP"),
+    ("l! M@ n#", "y! Z@ a#"),
+    ("1 2 3 4 5", "1 2 3 4 5"),
+]
 
 
 class Args:
@@ -23,8 +28,8 @@ class TestCiphers:
 
 
 class TestRot13:
-    @pytest.mark.parametrize("message", TEST_MESSAGES)
-    def test_messages(self, capsys, message):
+    @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
+    def test_messages(self, capsys, message, cipher):
         args = Args(message=message)
 
         rc = src.ciphers.rot13(args)
@@ -32,11 +37,12 @@ class TestRot13:
 
         output = capsys.readouterr()
         assert message in output.out
+        assert cipher in output.out
 
 
 class TestCaesar:
-    @pytest.mark.parametrize("message", TEST_MESSAGES)
-    def test_messages(self, capsys, message):
+    @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
+    def test_messages(self, capsys, message, cipher):
         args = Args(message=message)
 
         rc = src.ciphers.caesar(args)
@@ -44,11 +50,13 @@ class TestCaesar:
 
         output = capsys.readouterr()
         assert message in output.out
+        # TODO
+        # assert cipher in output.out
 
 
 class TestVigenere:
-    @pytest.mark.parametrize("message", TEST_MESSAGES)
-    def test_messages(self, capsys, message):
+    @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
+    def test_messages(self, capsys, message, cipher):
         args = Args(message=message)
 
         rc = src.ciphers.vigenere(args)
@@ -56,3 +64,5 @@ class TestVigenere:
 
         output = capsys.readouterr()
         assert message in output.out
+        # TODO
+        # assert cipher in output.out
