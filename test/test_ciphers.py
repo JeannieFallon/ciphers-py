@@ -6,6 +6,8 @@ import pytest
 import src.ciphers
 import src.util
 
+TEST_MESSAGES = ["Curiouser and curiouser!", "xyzabc XYZABC", "a! B@ c#", "1 2 3 4 5"]
+
 
 class Args:
     def __init__(self, *, message=None):
@@ -19,21 +21,38 @@ class TestCiphers:
         assert pytest_wrapped_e.type == SystemExit
         assert pytest_wrapped_e.value.code == errno.ENOENT
 
-    def test_rot13(self):
-        plain = "This is a test message"
-        args = Args(message=plain)
+
+class TestRot13:
+    @pytest.mark.parametrize("message", TEST_MESSAGES)
+    def test_messages(self, capsys, message):
+        args = Args(message=message)
+
         rc = src.ciphers.rot13(args)
         assert rc == 0
-        # TODO get console output
 
-    def test_caesar(self):
-        plain = "This is a test message"
-        args = Args(message=plain)
+        output = capsys.readouterr()
+        assert message in output.out
+
+
+class TestCaesar:
+    @pytest.mark.parametrize("message", TEST_MESSAGES)
+    def test_messages(self, capsys, message):
+        args = Args(message=message)
+
         rc = src.ciphers.caesar(args)
         assert rc == 0
 
-    def test_vigenere(self):
-        plain = "This is a test message"
-        args = Args(message=plain)
+        output = capsys.readouterr()
+        assert message in output.out
+
+
+class TestVigenere:
+    @pytest.mark.parametrize("message", TEST_MESSAGES)
+    def test_messages(self, capsys, message):
+        args = Args(message=message)
+
         rc = src.ciphers.vigenere(args)
         assert rc == 0
+
+        output = capsys.readouterr()
+        assert message in output.out
