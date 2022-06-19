@@ -82,6 +82,7 @@ Run Black code formatter on Python files:
 make format
 ```
 
+### Test
 Run unit tests, written in Pytest:
 ```
 make test
