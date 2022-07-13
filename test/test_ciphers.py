@@ -24,12 +24,14 @@ TEST_KEYVALS = [
 
 DEFAULT_MESSAGE = "aBc XyZ"
 DEFAULT_KEYVAL = 13
+DEFAULT_KEYWORD = "cheshire"
 
 
 class Args:
-    def __init__(self, *, message=None, keyval=None):
+    def __init__(self, *, message=None, keyval=None, keyword=None):
         self.message = message
         self.keyval = keyval
+        self.keyword = keyword
 
 
 class TestCiphers:
@@ -82,7 +84,7 @@ class TestCaesar:
 class TestVigenere:
     @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
     def test_messages(self, capsys, message, cipher):
-        args = Args(message=message)
+        args = Args(message=message, keyword=DEFAULT_KEYWORD)
 
         rc = src.ciphers.vigenere(args)
         assert rc == 0

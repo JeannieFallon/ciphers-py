@@ -25,6 +25,9 @@ def caesar(args) -> int:
 
 def vigenere(args) -> int:
     msg = args.message
+    key = args.keyword
+    # FIXME dummy key val
+    cipher = util.get_cipher(msg, key=1)
     print(f"Running Vigenere cipher on message: {msg}")
     return 0
 
@@ -57,6 +60,12 @@ def main() -> int:
 
     vigenere_parser = cipher_parsers.add_parser(
         "vigenere", parents=[msg_parser], help="vigenere help"
+    )
+    vigenere_parser.add_argument(
+        "--keyword",
+        "-k",
+        required=True,
+        help="the keyword used to generate sequence of shift values",
     )
     vigenere_parser.set_defaults(func=vigenere)
 
