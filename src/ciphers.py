@@ -1,4 +1,5 @@
 import sys
+import errno
 import argparse
 
 import util
@@ -13,30 +14,39 @@ def rot13(args) -> int:
 
     cipher = util.get_cipher(msg, keyval=ROT13_KEYVAL)
     print(f"Ciphertext is:\n{cipher}")
+
     return 0
 
 
 def caesar(args) -> int:
     msg = args.message
-    # FIXME validate keyval > 0
     keyval = args.keyval
+
+    if keyval <= 0:
+        raise ValueError("Key value must be greater than 0")
+
     print(f"Running Caesar cipher with shift value {keyval} on message:\n{msg}")
 
     cipher = util.get_cipher(msg, keyval=keyval)
     print(f"Ciphertext is:\n{cipher}")
+
     return 0
 
 
 def vigenere(args) -> int:
     msg = args.message
-    # FIXME validate keyword as alpha only
     keyword = args.keyword
+
+    if not keyword.isalpha():
+        raise ValueError("Key word must contain alphabet letters only")
+
     cipher = util.get_cipher(msg, keyword=keyword)
     print(f"Running Vigenere cipher with keyword {keyword} on message:\n{msg}")
+
     return 0
 
 
-def main() -> int:
+def main():
     parser = argparse.ArgumentParser("main parser")
     cipher_parsers = parser.add_subparsers(
         dest="cipher", required=True, help="ciphers parsers"
@@ -74,10 +84,16 @@ def main() -> int:
     vigenere_parser.set_defaults(func=vigenere)
 
     args = parser.parse_args()
-    args.func(args)
 
-    return 0
+    try:
+        args.func(args)
+    except ValueError as e:
+        print(e)
+        sys.exit(errno.EINVAL)
+    except BaseException as e:
+        print(e)
+        sys.exit(errno.ESRCH)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

@@ -7,8 +7,7 @@ ALPHA_LEN = 26
 
 
 def get_cipher(msg, *, keyval=None, keyword=None) -> str:
-    # FIXME validate keyval > 0
-    if keyval or keyval == 0:
+    if keyval:
         # ROT13 and Caesar
         return get_single_shift_cipher(msg, keyval)
     elif keyword:

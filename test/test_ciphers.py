@@ -1,5 +1,6 @@
 import sys
 import errno
+import subprocess
 
 import pytest
 
@@ -14,17 +15,21 @@ TEST_MESSAGES = [
 ]
 # TODO block keyval % 26 = 0
 TEST_KEYVALS = [
-    (0, "aBc XyZ"),
     (1, "bCd YzA"),
     (10, "kLm HiJ"),
     (25, "zAb WxY"),
     (26, "aBc XyZ"),
     (42, "qRs NoP"),
 ]
+INVALID_KEYVALS = [-1, 0]
+INVALID_KEYWORDS = ["a bc", "123abc", "abc!@#"]
 
 DEFAULT_MESSAGE = "aBc XyZ"
 DEFAULT_KEYVAL = 13
 DEFAULT_KEYWORD = "cheshire"
+
+# FIXME
+TOOL = "bin/ciphers"
 
 
 class Args:
@@ -40,6 +45,25 @@ class TestCiphers:
             rc = src.ciphers.main()
         assert pytest_wrapped_e.type == SystemExit
         assert pytest_wrapped_e.value.code == errno.ENOENT
+
+
+# Use full executable to test validation and error handling
+class TestValidation:
+    @pytest.mark.parametrize("keyval", INVALID_KEYVALS)
+    def test_invalid_keyvals(self, capsys, keyval):
+        pass
+        # rc = subprocess.call(f'{TOOL} -m "{DEFAULT_MESSAGE}" -k {keyval}', shell=True)
+        # assert rc == errno.EINVAL
+
+        # output = capsys.readouterr()
+        # assert "Key value must be greater than 0" in output.out
+
+    def test_invalid_keywords(self):
+        pass
+        # try:
+        #    subprocess.check_output("dir /f",shell=True,stderr=subprocess.STDOUT)
+        # except subprocess.CalledProcessError as e:
+        #    assert "Key word" in output
 
 
 class TestRot13:
