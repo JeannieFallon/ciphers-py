@@ -4,31 +4,35 @@ import argparse
 import util
 
 
+ROT13_KEYVAL = 13
+
+
 def rot13(args) -> int:
     msg = args.message
     print(f"Running ROT13 cipher on message:\n{msg}")
 
-    cipher = util.get_cipher(msg, key=13)
+    cipher = util.get_cipher(msg, keyval=ROT13_KEYVAL)
     print(f"Ciphertext is:\n{cipher}")
     return 0
 
 
 def caesar(args) -> int:
     msg = args.message
-    key = args.keyval
-    print(f"Running Caesar cipher with shift value {key} on message:\n{msg}")
+    # FIXME validate keyval > 0
+    keyval = args.keyval
+    print(f"Running Caesar cipher with shift value {keyval} on message:\n{msg}")
 
-    cipher = util.get_cipher(msg, key=key)
+    cipher = util.get_cipher(msg, keyval=keyval)
     print(f"Ciphertext is:\n{cipher}")
     return 0
 
 
 def vigenere(args) -> int:
     msg = args.message
-    key = args.keyword
-    # FIXME dummy key val
-    cipher = util.get_cipher(msg, key=1)
-    print(f"Running Vigenere cipher on message: {msg}")
+    # FIXME validate keyword as alpha only
+    keyword = args.keyword
+    cipher = util.get_cipher(msg, keyword=keyword)
+    print(f"Running Vigenere cipher with keyword {keyword} on message:\n{msg}")
     return 0
 
 
