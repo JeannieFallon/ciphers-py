@@ -2,7 +2,7 @@
 Python CLI app for text transformation with the following alphanumeric ciphers:
 - ROT13
 - Caesar
-- TODO: Vigenere
+- Vigenere
 
 ## Demo
 ```
@@ -16,7 +16,13 @@ $ ./bin/ciphers caesar -m "Curiouser and curiouser!" -k 5
 Running Caesar cipher with shift value 5 on message:                                                    
 Curiouser and curiouser!                                                                                
 Ciphertext is:                                                                                          
-Hzwntzxjw fsi hzwntzxjw!                                                                                
+Hzwntzxjw fsi hzwntzxjw!
+
+$ ./bin/ciphers vigenere -m "Curiouser and curiouser!" -k Alice                                                                       
+Running Vigenere cipher with keyword Alice on message:                                   
+Curiouser and curiouser!                                                                 
+Ciphertext is:                                                                           
+Cfzksudmt eno kwvizcuir!                                                                                                          
 ```
 
 ## Usage
