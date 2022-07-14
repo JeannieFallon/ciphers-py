@@ -22,8 +22,8 @@ def caesar(args) -> int:
     msg = args.message
     keyval = args.keyval
 
-    if keyval <= 0:
-        raise ValueError("Key value must be greater than 0")
+    if keyval <= 0 or keyval % 26 == 0:
+        raise ValueError("Key value must not be zero or divisible by 26")
 
     print(f"Running Caesar cipher with shift value {keyval} on message:\n{msg}")
     cipher = util.get_cipher(msg, keyval=keyval)

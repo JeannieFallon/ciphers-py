@@ -27,7 +27,6 @@ TEST_KEYVALS = [
     (1, "bCd YzA"),
     (10, "kLm HiJ"),
     (25, "zAb WxY"),
-    (26, "aBc XyZ"),
     (42, "qRs NoP"),
 ]
 
@@ -36,7 +35,7 @@ DEFAULT_ROT13 = 13
 DEFAULT_CAESAR = 20
 DEFAULT_VIGENERE = "Alice"
 
-INVALID_KEYVALS = [-1, 0]
+INVALID_KEYVALS = [-1, 0, 26]
 INVALID_KEYWORDS = ["a bc", "123abc", "abc!@#"]
 
 # FIXME
