@@ -22,7 +22,6 @@ TEST_MESSAGES = [
     ("l! M@ n#", "y! Z@ a#", "f! G@ h#", "l! X@ v#"),
     ("1 2 3 4 5", "1 2 3 4 5", "1 2 3 4 5", "1 2 3 4 5"),
 ]
-# TODO block keyval % 26 = 0
 TEST_KEYVALS = [
     (1, "bCd YzA"),
     (10, "kLm HiJ"),
@@ -60,20 +59,26 @@ class TestCiphers:
 # Use full executable to test validation and error handling
 class TestValidation:
     @pytest.mark.parametrize("keyval", INVALID_KEYVALS)
-    def test_invalid_keyvals(self, capsys, keyval):
-        pass
-        # rc = subprocess.call(f'{TOOL} -m "{DEFAULT_MESSAGE}" -k {keyval}', shell=True)
-        # assert rc == errno.EINVAL
+    def test_invalid_keyvals(self, keyval):
+        args = Args(message=DEFAULT_MESSAGE, keyval=keyval)
 
-        # output = capsys.readouterr()
-        # assert "Key value must be greater than 0" in output.out
+        try:
+            rc = src.ciphers.caesar(args)
+        except ValueError as e:
+            return
 
-    def test_invalid_keywords(self):
-        pass
-        # try:
-        #    subprocess.check_output("dir /f",shell=True,stderr=subprocess.STDOUT)
-        # except subprocess.CalledProcessError as e:
-        #    assert "Key word" in output
+        assert False
+
+    @pytest.mark.parametrize("keyword", INVALID_KEYWORDS)
+    def test_invalid_keywords(self, keyword):
+        args = Args(message=DEFAULT_MESSAGE, keyword=keyword)
+
+        try:
+            rc = src.ciphers.vigenere(args)
+        except ValueError as e:
+            return
+
+        assert False
 
 
 class TestRot13:
