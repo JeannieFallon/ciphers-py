@@ -10,8 +10,8 @@ ROT13_KEYVAL = 13
 
 def rot13(args) -> int:
     msg = args.message
-    print(f"Running ROT13 cipher on message:\n{msg}")
 
+    print(f"Running ROT13 cipher on message:\n{msg}")
     cipher = util.get_cipher(msg, keyval=ROT13_KEYVAL)
     print(f"Ciphertext is:\n{cipher}")
 
@@ -26,7 +26,6 @@ def caesar(args) -> int:
         raise ValueError("Key value must be greater than 0")
 
     print(f"Running Caesar cipher with shift value {keyval} on message:\n{msg}")
-
     cipher = util.get_cipher(msg, keyval=keyval)
     print(f"Ciphertext is:\n{cipher}")
 
@@ -40,8 +39,9 @@ def vigenere(args) -> int:
     if not keyword.isalpha():
         raise ValueError("Key word must contain alphabet letters only")
 
-    cipher = util.get_cipher(msg, keyword=keyword)
     print(f"Running Vigenere cipher with keyword {keyword} on message:\n{msg}")
+    cipher = util.get_cipher(msg, keyword=keyword)
+    print(f"Ciphertext is:\n{cipher}")
 
     return 0
 

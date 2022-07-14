@@ -7,11 +7,20 @@ import pytest
 import src.ciphers
 import src.util
 
+
+"""Tuples contain 4 items: message, ROT13 ciphertext, Caesar ciphertext using keyval20, and Vigenere ciphertext
+using keyword "Alice"
+"""
 TEST_MESSAGES = [
-    ("Curiouser and curiouser!", "Phevbhfre naq phevbhfre!"),
-    ("xyzabc XYZABC", "klmnop KLMNOP"),
-    ("l! M@ n#", "y! Z@ a#"),
-    ("1 2 3 4 5", "1 2 3 4 5"),
+    (
+        "Curiouser and curiouser!",
+        "Phevbhfre naq phevbhfre!",
+        "Wolciomyl uhx wolciomyl",
+        "Cfzksudmt eno kwvizcuir!",
+    ),
+    ("xyzabc XYZABC", "klmnop KLMNOP", "rstuvw RSTUVW", "xjhcfc IGBEBN"),
+    ("l! M@ n#", "y! Z@ a#", "f! G@ h#", "l! X@ v#"),
+    ("1 2 3 4 5", "1 2 3 4 5", "1 2 3 4 5", "1 2 3 4 5"),
 ]
 # TODO block keyval % 26 = 0
 TEST_KEYVALS = [
@@ -21,12 +30,14 @@ TEST_KEYVALS = [
     (26, "aBc XyZ"),
     (42, "qRs NoP"),
 ]
-INVALID_KEYVALS = [-1, 0]
-INVALID_KEYWORDS = ["a bc", "123abc", "abc!@#"]
 
 DEFAULT_MESSAGE = "aBc XyZ"
-DEFAULT_KEYVAL = 13
-DEFAULT_KEYWORD = "cheshire"
+DEFAULT_ROT13 = 13
+DEFAULT_CAESAR = 20
+DEFAULT_VIGENERE = "Alice"
+
+INVALID_KEYVALS = [-1, 0]
+INVALID_KEYWORDS = ["a bc", "123abc", "abc!@#"]
 
 # FIXME
 TOOL = "bin/ciphers"
@@ -67,8 +78,8 @@ class TestValidation:
 
 
 class TestRot13:
-    @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
-    def test_messages(self, capsys, message, cipher):
+    @pytest.mark.parametrize("message,rot13,caesar,vigenere", TEST_MESSAGES)
+    def test_messages(self, capsys, message, rot13, caesar, vigenere):
         args = Args(message=message)
 
         rc = src.ciphers.rot13(args)
@@ -76,21 +87,21 @@ class TestRot13:
 
         output = capsys.readouterr()
         assert message in output.out
-        assert cipher in output.out
+        assert rot13 in output.out
 
 
 class TestCaesar:
-    @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
-    def test_messages(self, capsys, message, cipher):
-        args = Args(message=message, keyval=DEFAULT_KEYVAL)
+    @pytest.mark.parametrize("message,rot13,caesar,vigenere", TEST_MESSAGES)
+    def test_messages(self, capsys, message, rot13, caesar, vigenere):
+        args = Args(message=message, keyval=DEFAULT_CAESAR)
 
         rc = src.ciphers.caesar(args)
         assert rc == 0
 
         output = capsys.readouterr()
         assert message in output.out
-        assert f"{DEFAULT_KEYVAL}" in output.out
-        assert cipher in output.out
+        assert f"{DEFAULT_CAESAR}" in output.out
+        assert caesar in output.out
 
     @pytest.mark.parametrize("keyval,cipher", TEST_KEYVALS)
     def test_keyvals(self, capsys, keyval, cipher):
@@ -106,14 +117,13 @@ class TestCaesar:
 
 
 class TestVigenere:
-    @pytest.mark.parametrize("message,cipher", TEST_MESSAGES)
-    def test_messages(self, capsys, message, cipher):
-        args = Args(message=message, keyword=DEFAULT_KEYWORD)
+    @pytest.mark.parametrize("message,rot13,caesar,vigenere", TEST_MESSAGES)
+    def test_messages(self, capsys, message, rot13, caesar, vigenere):
+        args = Args(message=message, keyword=DEFAULT_VIGENERE)
 
         rc = src.ciphers.vigenere(args)
         assert rc == 0
 
         output = capsys.readouterr()
         assert message in output.out
-        # TODO
-        # assert cipher in output.out
+        assert vigenere in output.out
