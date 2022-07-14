@@ -1,5 +1,5 @@
 # ciphers-py
-Python CLI app for text transformation with the following alphanumeric ciphers:
+Python CLI app for text transformation with the following alphabetic ciphers:
 - ROT13
 - Caesar
 - Vigenere
